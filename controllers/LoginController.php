@@ -39,13 +39,18 @@ class LoginController
             'titulo' => 'Crea tu cuenta en UpTask '
         ]);
     }
-    public static function olvide()
+    public static function olvide(Router $router)
     {
-        echo "desde olvide";
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         }
+
+        // Render a olvide password
+        $router->render('auth/olvide',[
+            'titulo' => 'Olvide mi Password'
+
+        ]);
     }
     public static function restablecer()
     {
