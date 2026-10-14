@@ -1,16 +1,18 @@
-<?php 
+<?php
 
 namespace Controllers;
 
-use MVC\Router; 
+use MVC\Router;
 
-class LoginController {
+class LoginController
+{
 
-    public static function login(Router $router ){
-          
+    public static function login(Router $router)
+    {
 
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
-            
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
         }
 
         // Render a la vista
@@ -20,44 +22,47 @@ class LoginController {
         ]);
     }
 
-    public static function logout(){
-        echo "desde logout";  
+    public static function logout()
+    {
+        echo "desde logout";
 
     }
 
 
-    public static function crear(Router $router){
-        echo "desde crear";  
-
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    public static function crear(Router $router)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         }
-
-         // Render a la vista
+        // Render a la vista
         $router->render('auth/crear', [
-         'titulo' => 'Crea tu cuenta en UpTask '
+            'titulo' => 'Crea tu cuenta en UpTask '
         ]);
     }
-    public static function olvide(){
-        echo "desde olvide";  
+    public static function olvide()
+    {
+        echo "desde olvide";
 
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
-
-        }
-    }
-    public static function restablecer(){
-        echo "desde restablecer";  
-
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         }
     }
-    public static function mensaje(){
-        echo "desde mensaje";  
+    public static function restablecer()
+    {
+        echo "desde restablecer";
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+        }
+    }
+    public static function mensaje()
+    {
+        echo "desde mensaje";
 
     }
-    public static function confirmar(){
-        echo "desde confirmar";  
+    public static function confirmar()
+    {
+        echo "desde confirmar";
 
     }
 
