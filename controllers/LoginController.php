@@ -37,22 +37,41 @@ class LoginController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $usuario->sincronizar($_POST);
-            $alertas=$usuario->validarNuevaCuentas();
+            $alertas = $usuario->validarNuevaCuentas();
 
-            $existeUsuario = Usuario::where('email', $usuario->email);
-            if($existeUsuario){
-                Usuario::setAlerta('error', 'El Usuario ya esta registrado');
-                $alertas = Usuario::getAlertas();
+            if (empty($alertas)) {
+                $existeUsuario = Usuario::where('email', $usuario->email);
+                if ($existeUsuario) {
+                    Usuario::setAlerta('error', 'El Usuario ya esta registrado');
+                    $alertas = Usuario::getAlertas();
+                } else {
+
+                    // hashear el password 
+                    $usuario->hashPassword();
+
+                    // Eliminar password2  
+                    unset($usuario->password2);
+
+                    // Generar el Token
+                    $usuario->crearToken();
+
+                    
+                    // crear un nuevo usuario
+                   $resultado= $usuario->guardar();
+
+                   if($resultado){
+                    header('Location: /mensaje');
+                   }
+                }
+
             }
 
 
- 
-             
         }
         // Render a la vista
         $router->render('auth/crear', [
-            'titulo' => 'Crea tu cuenta en UpTask' ,
-            'usuario'=> $usuario,
+            'titulo' => 'Crea tu cuenta en UpTask',
+            'usuario' => $usuario,
             'alertas' => $alertas
         ]);
     }
@@ -64,7 +83,7 @@ class LoginController
         }
 
         // Render a olvide password
-        $router->render('auth/olvide',[
+        $router->render('auth/olvide', [
             'titulo' => 'Olvide mi Password'
 
         ]);
@@ -77,12 +96,12 @@ class LoginController
         }
 
         // Render desde restablecer password
-        $router->render('auth/restablecer',[
+        $router->render('auth/restablecer', [
             'titulo' => 'Restablecer Password'
         ]);
     }
 
-    
+
     public static function mensaje(Router $router)
     {
 
