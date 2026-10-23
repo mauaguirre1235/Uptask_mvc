@@ -56,18 +56,18 @@ class LoginController
                     // Generar el Token
                     $usuario->crearToken();
 
-                    
+
                     // crear un nuevo usuario
-                   $resultado= $usuario->guardar();
+                    $resultado = $usuario->guardar();
 
-                   // Enviar email
-                   $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
- 
-                   $email->enviarConfirmacion();
+                    // Enviar email
+                    $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
 
-                   if($resultado){
-                    header('Location: /mensaje');
-                   }
+                    $email->enviarConfirmacion();
+
+                    if ($resultado) {
+                        header('Location: /mensaje');
+                    }
                 }
 
             }
@@ -118,8 +118,37 @@ class LoginController
     }
     public static function confirmar(Router $router)
     {
+
+        $alertas = [];
+
+        $token = s($_GET['token']);
+
+        if (!$token)
+            header('Location: /');
+
+        // encontrar al usuario con este token 
+        $usuario = Usuario::where('token', $token);
+
+        if (empty($usuario)) {
+            // mostrar mensaje de error
+            Usuario::setAlerta('error', 'Token no Valido');
+        } else {
+
+            // confirmar la cuenta
+            $usuario->confirmado = '1';
+            $usuario->token = null;
+            unset($usuario->password2);
+            $usuario->guardar();
+            Usuario::setAlerta('exito', 'Cuenta comprobada correctamente');
+
+        }
+
+        // obtener alertas
+        $alertas = Usuario::getAlertas();
+
         $router->render('auth/confirmar', [
-            'titulo' => 'Confirma tu cuenta UpTask'
+            'titulo' => 'Confirma tu cuenta UpTask',
+            'alertas' => $alertas
         ]);
 
     }
