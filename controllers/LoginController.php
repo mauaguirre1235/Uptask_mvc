@@ -83,14 +83,32 @@ class LoginController
     }
     public static function olvide(Router $router)
     {
+        $alertas = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $usuario = new Usuario($_POST);
+            $alertas = $usuario->validarEmail();
+
+            if (empty($alertas)) {
+                // buscar el usuario
+                $usuario = Usuario::where('email', $usuario->email);
+                // encontre a usuario
+                if ($usuario && $usuario->confirmado) {
+                    
+                } else {
+                    Usuario::setAlerta('error', 'El Usuario no existe o no esta confirmado');
+                    $alertas = Usuario::getAlertas();
+                }
+
+            }
 
         }
 
         // Render a olvide password
         $router->render('auth/olvide', [
-            'titulo' => 'Olvide mi Password'
+            'titulo' => 'Olvide mi Password',
+            'alertas' => $alertas
 
         ]);
     }
