@@ -38,8 +38,8 @@ class Email
 
         $contenido = "<html>";
         $contenido .= "<p><strong>Hola " . $this->nombre . "</strong> Has creado tu cuenta en Uptask , solo debes confirmarla presionando el siguiente enlace</p>";
-        $contenido .= "<p>Presiona aqui: <a href='http://localhost:3000/confirmar?token=" . 
-        $this->token. "'>Confirmar cuenta</a> </p>";
+        $contenido .= "<p>Presiona aqui: <a href='http://localhost:3000/confirmar?token=" .
+            $this->token . "'>Confirmar cuenta</a> </p>";
         $contenido .= "<p>Si tu no solicitaste esta cuenta, puedes ignorar el mensaje</p>";
         $contenido .= "</html>";
 
@@ -50,7 +50,8 @@ class Email
     }
 
 
-    public function enviarInstrucciones(){
+    public function enviarInstrucciones()
+    {
         $mail = new PHPMailer();
         $mail->isSMTP();
         $mail->Host = 'sandbox.smtp.mailtrap.io';
@@ -61,18 +62,18 @@ class Email
 
         $mail->setFrom('cuentas@uptask.com');
         $mail->addAddress('cuentas@uptask.com', 'Uptask.com');
-        $mail->Subject = 'Reestablecer tu password';
+        $mail->Subject = 'Restablece tu password';
 
         // Set HTML
         $mail->isHTML(TRUE);
         $mail->CharSet = 'UTF-8';
 
         $contenido = "<html>";
-        $contenido .="<p><strong> " . $this->nombre. "</strong> Has solicitado restablecer tu cuenta, siguiente enlace para hacerlo. </p>";
-        $contenido .="<p>Presiona aqui: <a href='http://localhost:3000/restablecer?token=" . 
-        $this->token. "'>Restablecer Password</a> </p>";
-        $contenido .="<p>Si tu no solicitaste esta cuenta, puedes ignorar este mensaje</p>";
-        $contenido = "</html>";
+        $contenido .= "<p><strong> " . $this->nombre . "</strong> Has solicitado restablecer tu cuenta, siguiente enlace para hacerlo. </p>";
+        $contenido .= "<p>Presiona aqui: <a href='http://localhost:3000/reestablecer?token=" .
+            $this->token . "'>Restablecer Password</a> </p>";
+        $contenido .= "<p>Si tu no solicitaste esta cuenta, puedes ignorar este mensaje</p>";
+        $contenido .= "</html>";
 
         $mail->Body = $contenido;
 

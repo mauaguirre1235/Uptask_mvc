@@ -103,6 +103,8 @@ class LoginController
                     // Actualizar el usuario
                     $usuario->guardar();
                     // Enviar Email
+                    $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
+                    $email->enviarInstrucciones();
 
                     // Imprimir alerta
                       Usuario::setAlerta('exito', 'Hemos enviado las instrucciones a tu email');
@@ -125,7 +127,7 @@ class LoginController
 
         ]);
     }
-    public static function restablecer(Router $router)
+    public static function reestablecer(Router $router)
     {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {

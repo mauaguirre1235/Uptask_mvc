@@ -21,8 +21,8 @@ $router->get('/olvide', [LoginController::class, 'olvide']);
 $router->post('/olvide', [LoginController::class, 'olvide']);
 
 // colocar el nuevo password
-$router->get('/restablecer', [LoginController::class, 'restablecer']);
-$router->post('/restablecer', [LoginController::class, 'restablecer']);
+$router->get('/reestablecer', [LoginController::class, 'reestablecer']);
+$router->post('/reestablecer', [LoginController::class, 'reestablecer']);
 
 // Confirmacion de cuenta 
 $router->get('/mensaje', [LoginController::class, 'mensaje']);
