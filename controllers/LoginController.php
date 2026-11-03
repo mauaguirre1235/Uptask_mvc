@@ -107,11 +107,11 @@ class LoginController
                     $email->enviarInstrucciones();
 
                     // Imprimir alerta
-                      Usuario::setAlerta('exito', 'Hemos enviado las instrucciones a tu email');
-            
+                    Usuario::setAlerta('exito', 'Hemos enviado las instrucciones a tu email');
+
                 } else {
                     Usuario::setAlerta('error', 'El Usuario no existe o no esta confirmado');
-                    
+
                 }
 
             }
@@ -129,14 +129,29 @@ class LoginController
     }
     public static function reestablecer(Router $router)
     {
+        $token = s($_GET['token']);
+        $mostrar = true;
+        
+        if(!$token) header('Location: /'); 
+
+        // Identificar el usuario con este token 
+        $usuario  = Usuario::where('token', $token); 
+
+        if(empty($usuario)) {
+            Usuario::setAlerta('error', 'Token No Valido ');
+            $mostrar = false;
+        }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         }
 
+        $alertas = Usuario::getAlertas();
         // Render desde restablecer password
-        $router->render('auth/restablecer', [
-            'titulo' => 'Restablecer Password'
+        $router->render('auth/reestablecer', [
+            'titulo' => 'Reestablecer Password',
+            'alertas' => $alertas,
+            'mostrar' => $mostrar
         ]);
     }
 

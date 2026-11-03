@@ -3,6 +3,10 @@
 
     <div class="contenedor-sm">
         <p class="descripcion-pagina">Coloca tu nuevo password</p>
+         <?php include_once __DIR__ .'/../templates/alertas.php';?>
+
+         <?php if($mostrar) { ?>
+
         <form class="formulario" method="POST" action="/reestablecer">
             <div class="campo">
                 <label for="password">Password</label>
@@ -17,6 +21,7 @@
             <input type="submit" class="botton" value="Guardar password">
         </form>
 
+        <?php } ?>
         <div class="acciones">
             <a href="/">¿Ya tienes una cuenta? Iniciar Sesion </a>
             <a href="/crear">¿Olvidaste tu Password</a>
