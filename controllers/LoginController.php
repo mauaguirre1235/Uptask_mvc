@@ -17,15 +17,33 @@ class LoginController
 
             $alertas = $usuario->validarLogin();
 
-            if(empty($alertas)) {
+            if (empty($alertas)) {
                 // verificar que el usuario exista 
                 $usuario = Usuario::where('email', $usuario->email);
 
-                if(!$usuario || !$usuario->confirmado ){
+                if (!$usuario || !$usuario->confirmado) {
                     Usuario::setAlerta('error', 'El usuario no existe o no esta confirmado');
+                } else {
+                    // el usuario existe 
+                    if (password_verify($_POST['password'], $usuario->password)) {
+                        // inicar la sesion 
+                        session_start();
+                         
+                        $_SESSION['id'] = $usuario->id;
+                        $_SESSION['nombre'] = $usuario->nombre;
+                        $_SESSION['email'] = $usuario->email;
+                        $_SESSION['login'] = true;
+
+                        // Redireccionar 
+                        header('Location: /proyectos');
+                        
+                    } else {
+                        Usuario::setAlerta('error', 'Password Incorrecto');
+
+                    }
                 }
 
-                
+
             }
 
         }
@@ -147,13 +165,14 @@ class LoginController
     {
         $token = s($_GET['token']);
         $mostrar = true;
-        
-        if(!$token) header('Location: /'); 
+
+        if (!$token)
+            header('Location: /');
 
         // Identificar el usuario con este token 
-        $usuario  = Usuario::where('token', $token); 
+        $usuario = Usuario::where('token', $token);
 
-        if(empty($usuario)) {
+        if (empty($usuario)) {
             Usuario::setAlerta('error', 'Token No Valido ');
             $mostrar = false;
         }
@@ -164,24 +183,24 @@ class LoginController
             $usuario->sincronizar($_POST);
 
             // validar el password
-           $alertas = $usuario->validarPassword();
+            $alertas = $usuario->validarPassword();
 
-           if(empty($alertas)) {
-              // Hashear el nuevo password
-              $usuario->hashPassword();
+            if (empty($alertas)) {
+                // Hashear el nuevo password
+                $usuario->hashPassword();
 
 
-              // Eliminar el token
-              $usuario->token = null;
-              // guardar el usaurio en la BD 
-             $resultado = $usuario->guardar();
+                // Eliminar el token
+                $usuario->token = null;
+                // guardar el usaurio en la BD 
+                $resultado = $usuario->guardar();
 
-              // Redireccionar
-              if($resultado){
-                header('Location: /');
-              }
-              
-           }
+                // Redireccionar
+                if ($resultado) {
+                    header('Location: /');
+                }
+
+            }
 
 
 
