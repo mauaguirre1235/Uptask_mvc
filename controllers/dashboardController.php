@@ -14,7 +14,9 @@ class DashboardController
         // protege la ruta
         isAuth();
 
-        $router->render('dashboard/index', []);
+        $router->render('dashboard/index', [
+            'titulo' => 'Proyectos'
+        ]);
     }
 
 }
