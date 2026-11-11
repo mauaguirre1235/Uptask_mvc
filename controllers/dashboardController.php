@@ -18,21 +18,24 @@ class DashboardController
             'titulo' => 'Proyectos'
         ]);
     }
- 
+
 
     public static function crear_proyecto(Router $router)
     {
         session_start();
 
+    
         // protege la ruta
         isAuth();
+         $alertas = [];
 
         $router->render('dashboard/crear-proyecto', [
+            'alertas' => $alertas,
             'titulo' => 'Crear Proyecto'
         ]);
     }
 
-     public static function perfil(Router $router)
+    public static function perfil(Router $router)
     {
         session_start();
 
