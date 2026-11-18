@@ -4,11 +4,11 @@
     <p class="no-proyectos">No Hay Proyecto Aun <a href="/crear-proyecto">Comienza creando uno</a></p>
 <?php } else { ?>
     <ul class="listado-proyectos">
-        <?php foreach($proyectos as $proyecto) {?>
-        <li class="proyecto">
-            <a href="/proyecto?id=<?php echo $proyecto->url; ?>">
-                <?php echo $proyecto->proyecto; ?></a>
-        </li>
+        <?php foreach ($proyectos as $proyecto) { ?>
+            <li class="proyecto">
+                <a href="/proyecto?id=<?php echo $proyecto->url; ?>">
+                    <?php echo $proyecto->proyecto; ?></a>
+            </li>
         <?php } ?>
     </ul>
 <?php } ?>
