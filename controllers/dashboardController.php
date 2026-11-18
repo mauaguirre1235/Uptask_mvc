@@ -12,12 +12,17 @@ class DashboardController
     public static function index(Router $router)
     {
         session_start();
-
         // protege la ruta
         isAuth();
 
+        $id = $_SESSION['id'];
+        $proyectos = Proyecto::belongsTo('propietarioId', $id);
+
+        
+
         $router->render('dashboard/index', [
-            'titulo' => 'Proyectos'
+            'titulo' => 'Proyectos' ,
+            'proyectos' => $proyectos
         ]);
     }
 
