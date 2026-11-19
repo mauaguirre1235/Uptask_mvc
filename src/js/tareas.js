@@ -1,9 +1,9 @@
-(function(){
+(function () {
     // boton para mostrar el modar de agregar tarea
     const nuevaTareaBtn = document.querySelector('#agregar-tarea');
     nuevaTareaBtn.addEventListener('click', mostrarFomulario);
 
-    function mostrarFomulario(){
+    function mostrarFomulario() {
         const modal = document.createElement('DIV');
         modal.classList.add('modal');
         modal.innerHTML = `
@@ -24,11 +24,27 @@
             </form>
      `;
 
-     setTimeout(() =>{
-        const formulario = document.querySelector('.formulario');
-        formulario.classList.add('animar');
-     }, 0);
-     
-     document.querySelector('body').appendChild(modal);
+        setTimeout(() => {
+            const formulario = document.querySelector('.formulario');
+            formulario.classList.add('animar');
+        }, 0);
+
+
+        modal.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            if (e.target.classList.contains('cerrar-modal')) {
+                const formulario = document.querySelector('.formulario');
+                formulario.classList.add('cerrar');
+                setTimeout(() => {
+                    modal.remove();
+                }, 500);
+
+            }
+        })
+
+        document.querySelector('body').appendChild(modal);
     }
+
+
 })();
