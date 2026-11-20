@@ -40,10 +40,27 @@
                     modal.remove();
                 }, 500);
 
+            } 
+            if(e.target.classList.contains('submit-nueva-tarea')){
+                submitFormularioNuevaTare();
+
+            
             }
         })
 
         document.querySelector('body').appendChild(modal);
+    }
+
+    function submitFormularioNuevaTare(){
+        const tarea = document.querySelector('#tarea').value.trim();
+
+        if(tarea === ''){
+            // mostrar una alerta de error
+
+            return;
+        } else {
+            console.log('si hay algo');
+        }
     }
 
 
