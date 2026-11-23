@@ -42,25 +42,57 @@
 
             } 
             if(e.target.classList.contains('submit-nueva-tarea')){
-                submitFormularioNuevaTare();
+                submitFormularioNuevaTarea();
 
             
             }
         })
 
-        document.querySelector('body').appendChild(modal);
+        document.querySelector('.dashboard').appendChild(modal);
     }
 
-    function submitFormularioNuevaTare(){
+    function submitFormularioNuevaTarea(){
         const tarea = document.querySelector('#tarea').value.trim();
 
         if(tarea === ''){
             // mostrar una alerta de error
-
+            mostrarAlerta('El nombre de la tarea es Obligatorio', 'error', document.querySelector('.formulario legend'));
             return;
         } else {
-            console.log('si hay algo');
+            agregarTarea(tarea);
         }
+    }
+
+    // Muestra un mensaje de interfaz
+    function mostrarAlerta(mensaje, tipo, referencia){
+        // Previene la cracion de multiples alertas
+        const alertaPrevia = document.querySelector('.alerta');
+        if(alertaPrevia){
+            alertaPrevia.remove();
+        }
+
+        const alerta = document.createElement('DIV');
+        alerta.classList.add('alerta', tipo);
+        alerta.textContent = mensaje ;
+        
+
+        // inserta la alerta antes del legend
+        referencia.parentElement.insertBefore(alerta, referencia.
+        nextElementSibling);   
+
+        // Eliminar la alerta despues de 5 segundos
+        setTimeout(() => {
+            alerta.remove();
+        }, 5000);
+ 
+
+        
+
+    }
+
+    // consultar el servidor para añadir una nueva tarea al proyecto actual
+    function agregarTarea(tarea){
+
     }
 
 
