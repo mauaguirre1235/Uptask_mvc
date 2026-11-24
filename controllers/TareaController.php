@@ -13,8 +13,11 @@ class TareaController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        
-        echo json_encode($_POST);
+        $respuesta = [
+            'proyectoId' => $_POST['proyectoId']
+        ]; 
+
+        echo json_encode($respuesta);
         }
 
     }
