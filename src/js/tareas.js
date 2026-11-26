@@ -57,7 +57,7 @@
         if (tarea === '') {
             // mostrar una alerta de error
             mostrarAlerta('El nombre de la tarea es Obligatorio', 'error',
-                 document.querySelector('.formulario legend'));
+                document.querySelector('.formulario legend'));
             return;
         } else {
             agregarTarea(tarea);
@@ -110,8 +110,16 @@
             const resultado = await respuesta.json();
             console.log(resultado);
 
-             mostrarAlerta(resultado.mensaje, resultado.tipo,
-                 document.querySelector('.formulario legend'));
+            mostrarAlerta(resultado.mensaje, resultado.tipo,
+                document.querySelector('.formulario legend'));
+
+            if (resultado.tipo === 'exito') {
+                const modal = document.querySelector('.modal');
+                setTimeout(() => {
+                    modal.remove(); 
+                }, 3000);
+
+            }
 
         } catch (error) {
             console.log(error);
