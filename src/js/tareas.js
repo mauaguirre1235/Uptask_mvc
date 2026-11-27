@@ -1,7 +1,36 @@
 (function () {
+
+    obtenerTareas();
+
+
     // boton para mostrar el modar de agregar tarea
     const nuevaTareaBtn = document.querySelector('#agregar-tarea');
     nuevaTareaBtn.addEventListener('click', mostrarFomulario);
+
+    async function obtenerTareas(){
+
+        try {
+
+            const id = obtenerProyecto();
+            const url = `/api/tareas?id=${id}`;
+            const respuesta = await fetch(url);
+            const resultado = await respuesta.json();
+           
+            const { tareas } = resultado;
+
+            mostrarTareas(tareas);
+
+            
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
+    function mostrarTareas(tareas){
+        console.log('Mostrando', tareas);
+
+    }
 
     function mostrarFomulario() {
         const modal = document.createElement('DIV');
